@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EarLobeOpenCV.iml" filepath="$PROJECT_DIR$/EarLobeOpenCV.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bitmapflipper/bitmapflipper.iml" filepath="$PROJECT_DIR$/bitmapflipper/bitmapflipper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cameramodule/cameramodule.iml" filepath="$PROJECT_DIR$/cameramodule/cameramodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/earlobedetection/earlobedetection.iml" filepath="$PROJECT_DIR$/earlobedetection/earlobedetection.iml" />
+      <module fileurl="file://$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" filepath="$PROJECT_DIR$/openCVLibrary320/openCVLibrary320.iml" />
+    </modules>
+  </component>
+</project>

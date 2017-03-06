@@ -1,0 +1,3 @@
+include ':app', ':earlobedetection', ':cameramodule', ':bitmapflipper'
+
+include ':openCVLibrary320'
