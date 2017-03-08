@@ -9,7 +9,8 @@
         android:supportsRtl="true">
         <activity android:name=".EarLobeActivity">
         </activity>
-        <activity android:name=".MultipleEarLobeActivity">
+        <activity android:name=".MultipleEarLobeActivity"
+                  android:exported="true">
         </activity>
     </application>
 

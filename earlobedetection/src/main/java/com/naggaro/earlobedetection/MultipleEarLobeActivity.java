@@ -36,7 +36,6 @@ public class MultipleEarLobeActivity extends AppCompatActivity {
     private static final String CASCADE_RIGHT_EAR_FILE = "right_ear_cascade.xml";
     private static final String TAG = "ELA";
     private static final String KEY_FILE_PATHS = "key_file_paths";
-    private static final String KEY_DETECTED_INFO = "key_detected_info";
     private static final java.lang.String EARING_FILE = "earing_file.jpg";
 
 
@@ -70,6 +69,8 @@ public class MultipleEarLobeActivity extends AppCompatActivity {
         progressDialog.setMessage("Please wait.....");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
+
+
 
         new Thread(new Runnable() {
             @Override
@@ -130,32 +131,34 @@ public class MultipleEarLobeActivity extends AppCompatActivity {
         }).start();
     }
 
-    private EarLobeDetectedPosition earlobeDetection(String bitmapFilePath, CascadeClassifier leftCascade, CascadeClassifier rightCascade) {
+    private EarLobeDetectedPosition earlobeDetection(String bitmapFilePath,
+                                                     CascadeClassifier leftCascade,
+                                                     CascadeClassifier rightCascade) {
         Mat inputImageMat = Imgcodecs.imread(bitmapFilePath);
         Mat grayedImageMat = new Mat();
         Imgproc.cvtColor(inputImageMat, grayedImageMat, Imgproc.COLOR_BGR2GRAY);
         Imgproc.equalizeHist(grayedImageMat, grayedImageMat);
+        EarLobeDetectedPosition earLobeDetectedPosition = new EarLobeDetectedPosition();
         Rect leftRect = detect(leftCascade
                 , grayedImageMat, bitmapFilePath);
-        Rect rightRect = detect(rightCascade
-                , grayedImageMat, bitmapFilePath);
-        EarLobeDetectedPosition earLobeDetectedPosition = new EarLobeDetectedPosition();
-        if (leftRect != null) {
+        if(leftRect==null) {
+            Rect rightRect = detect(rightCascade
+                    , grayedImageMat, bitmapFilePath);
+            if (rightRect != null) {
+                rightRect.height *= .8;
+                rightRect.x *= .95;
+                Point centerFromRectForRight = getCenterFromRectForRight(rightRect);
+                earLobeDetectedPosition.setRightEar(centerFromRectForRight);
+                earLobeDetectedPosition.setRightRect(rightRect);
+            }
+        }else{
             leftRect.height *= .8;
             leftRect.x *= 1.05;
             Point centerFromRectForLeft = getCenterFromRectForLeft(leftRect);
             earLobeDetectedPosition.setLeftEar(centerFromRectForLeft);
             earLobeDetectedPosition.setLeftRect(leftRect);
         }
-        if (rightRect != null) {
-            rightRect.height *= .8;
-            rightRect.x *= .95;
-            Point centerFromRectForRight = getCenterFromRectForRight(rightRect);
-            earLobeDetectedPosition.setRightEar(centerFromRectForRight);
-            earLobeDetectedPosition.setRightRect(rightRect);
-        }
         drawOnInputImage(inputImageMat, earLobeDetectedPosition);
-//        Imgproc.cvtColor(inputImageMat, inputImageMat, Imgproc.COLOR_GRAY2RGB);
         saveInputImage(inputImageMat, bitmapFilePath);
         inputImageMat.release();
         grayedImageMat.release();
@@ -182,18 +185,16 @@ public class MultipleEarLobeActivity extends AppCompatActivity {
 
     private void drawEarringOnEarLobes(Mat inputImageMat
             , Point ear, Rect rect, boolean isLeftEar) {
-        Mat earingImage = Imgcodecs.imread(getAbsolutePath(EARING_FILE));
-        Mat submat;
-//        Imgproc.circle(inputImageMat, ear, 8, getScalar(Color.RED));
-        submat = inputImageMat.submat(
+        Mat earringImage = Imgcodecs.imread(getAbsolutePath(EARING_FILE));
+        Mat subMat;
+        subMat = inputImageMat.submat(
                 new Rect((int) (ear.x +
-                        ((double) (rect.width + (earingImage.cols() * (isLeftEar ? 1 : -1)))
+                        ((double) (rect.width + (earringImage.cols() * (isLeftEar ? 1 : -1)))
                                 * (isLeftEar ? -0.5 : +0.5)))
                         , (int) ear.y
-                        , earingImage.cols()
-                        , earingImage.rows()));
-//        earingImage.copyTo(submat);
-        Core.addWeighted(earingImage, 1, submat, 1, .0, submat);
+                        , earringImage.cols()
+                        , earringImage.rows()));
+        Core.addWeighted(earringImage, 1, subMat, 1, .0, subMat);
     }
 
     @NonNull
