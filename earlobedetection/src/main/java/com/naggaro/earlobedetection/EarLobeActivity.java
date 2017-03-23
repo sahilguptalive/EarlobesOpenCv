@@ -58,27 +58,10 @@ public class EarLobeActivity extends AppCompatActivity {
             return;
         }
         Mat inputImageMat = Imgcodecs.imread(getAbsolutePath(FACE_IMAGE_INPUT_FILE));
-
-//        Imgproc.cvtColor(inputImageMat, inputImageMat, Imgproc.COLOR_BGR2GRAY);
-//        Imgproc.equalizeHist(inputImageMat, inputImageMat);
-
         detect(new CascadeClassifier(getAbsolutePath(CASCADE_LEFT_EAR_FILE))
                 , inputImageMat, getScalar(Color.BLUE));
         detect(new CascadeClassifier(getAbsolutePath(CASCADE_RIGHT_EAR_FILE))
                 , inputImageMat, getScalar(Color.GREEN));
-
-        //these were not accurate
-//        detect(new CascadeClassifier(getAbsolutePath(CASCADE_FRONTAL_FACE_ALT_FILE))
-//                , inputImageMat, getScalar(Color.BLACK));
-//        detect(new CascadeClassifier(getAbsolutePath(CASCADE_FRONTAL_FACE_ALT2_FILE))
-//                , inputImageMat, getScalar(Color.GRAY));
-//        detect(new CascadeClassifier(getAbsolutePath(CASCADE_FRONTAL_FACE_ALT_TREE_FILE))
-//                , inputImageMat, getScalar(Color.RED));
-
-        //CASCADE_FRONTAL_FACE_DEFAULT_FILE was accurate for front facing only
-//        detect(new CascadeClassifier(getAbsolutePath(CASCADE_FRONTAL_FACE_DEFAULT_FILE))
-//                , inputImageMat, getScalar(Color.YELLOW));
-        //CASCADE_PROFILE_FACE_FILE is accurate only for side facing
         detect(new CascadeClassifier(getAbsolutePath(CASCADE_PROFILE_FACE_FILE))
                 , inputImageMat, getScalar(Color.WHITE
                 ));

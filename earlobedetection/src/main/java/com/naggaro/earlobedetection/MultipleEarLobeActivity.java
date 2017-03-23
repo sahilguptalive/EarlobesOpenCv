@@ -57,13 +57,6 @@ public class MultipleEarLobeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ear_lobe);
-        /*Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                earlobeDetection(getBitmapFilePaths(getIntent()));
-            }
-        });
-        t.start();*/
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage("Please wait.....");
@@ -113,10 +106,6 @@ public class MultipleEarLobeActivity extends AppCompatActivity {
                             = earlobeDetection(bitmapFilePaths.get(index), leftCascade, rightCascade);
                     recursiveApproach(detectedPositions, bitmapFilePaths, index + 1, leftCascade, rightCascade);
                 } else {
-                    //Intent intent = new Intent();
-                    //intent.putExtra(KEY_DETECTED_INFO, detectedPositions);
-                    //setResult(RESULT_OK, intent);
-                    //finish();
                     MultipleEarLobeActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

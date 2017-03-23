@@ -101,7 +101,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback, Ca
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         rawBitmapList = new ArrayList<>();
-//        bitmapist = new ArrayList<>();
         imgShutter = (ImageView) findViewById(R.id.img_shutter);
         imgShutter.setOnClickListener(new View.OnClickListener() {
             @Override
